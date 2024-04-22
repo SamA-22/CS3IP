@@ -172,11 +172,24 @@ def test_basic_model():
     predictions = (predictions >= threshold).astype(int)
     return predictions
 
+def save_model(model):
+    decision = input("Do you want to save the model:")
+
+    if(decision == "yes"):
+        name = input("name your model: ")
+        #bestModel.save(f"models/{name}")
+        model.save(f"Double_Crossover\\ml\\{name}")
+        dump(scaler, open(f'Double_Crossover\\ml\\{name}_scaler.pkl', 'wb'))
+    else:
+        print("ok")
+
 filePath = "MACD\\ml_data.csv"
 maxLayers, maxUnits, unitDecriment, maxDropout, dropoutDecriment, batchSize, searchMaxEpochs, errorCheckLoopAmount, predictEpochs = set_up_variables()
 
 #Fetches and formats train data and test data as well as the actual prices, then sets objects parameters to that data.
 train_x, train_y, test_x, test_y, scaler= get_data(filePath)
+
+
 # predictions = test_basic_model()
 # predictions = np.squeeze(predictions, axis=2)
 predictions = test_model()
@@ -196,27 +209,9 @@ print(f"True Negatives: {np.sum((test_y == 0) & (predictions == 0))}")
 #False Negatives
 print(f"False Negatives: {np.sum((test_y == 1) & (predictions == 0))}")
 
-# """
-# HOW TO LOAD MODELS
-# preModel = load_model("FYP\\Scripts\\MACD Short Term\\MachineLearningModel")
-# predictions = use_model(preModel)
-# """
 
-# true_recall = np.sum((test_y == 1) & (predictions == 1))
-# incorrect_true_recall = np.sum((test_y == 0) & (predictions == 1))
+save_model()
 
-# print(np.sum(test_y == 1) / (np.sum(test_y == 0) + np.sum(test_y == 1)), np.sum((test_y == 1)))
-# print(true_recall/(true_recall + incorrect_true_recall), np.sum((predictions == 1)))
+end_time = time.time()
 
-# decision = input("Do you want to save the model:")
-
-# if(decision == "yes"):
-#     name = input("name your model: ")
-#     model.save(f"MACD\\ml\\{name}")
-#     dump(scaler, open(f'MACD\\ml\\{name}_scaler.pkl', 'wb'))
-# else:
-#     print("ok")
-
-# end_time = time.time()
-
-# print(f"Elapsed Time: {end_time - start_time} seconds")
+print(f"Elapsed Time: {end_time - start_time} seconds")

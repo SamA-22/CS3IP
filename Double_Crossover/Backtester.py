@@ -65,5 +65,5 @@ for ticker in tickers:
                 addition = {"Ticker": tickers.index(ticker), "Time": int(str(f'{in_time.hour}{in_time.minute}{in_time.second}')), "close": data["Close"][ticker][buy_signal.index[i]], "ema50_prev": ema50_prev[buy_signal.index[i]], "ema50": ema50[buy_signal.index[i]], "ema200_prev": ema200_prev[buy_signal.index[i]], "ema200": ema200[buy_signal.index[i]], "obv": obv[buy_signal.index[i]], "rsi": rsi[buy_signal.index[i]], "outcome": outcome}
                 ml_data.loc[len(ml_data)] = addition
 
-#ml_data.to_csv(f"Double_Crossover\\ml_data({today}).csv", index=False)
+ml_data.to_csv(f"Double_Crossover\\ml_data({today}).csv", index=False)
 print(f"time taken: {time.time() - start_time}")
